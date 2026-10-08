@@ -1,0 +1,60 @@
+<div class="auth-page">
+  <div class="row g-0 min-vh-100">
+    <div class="col-lg-6 auth-visual d-none d-lg-block">
+      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80" alt="Career support" />
+    </div>
+    <div class="col-lg-6 d-flex align-items-center justify-content-center bg-white">
+      <div class="w-100 px-4 px-lg-5" style="max-width: 500px;">
+        <div class="text-center mb-4">
+          <div class="brand-logo">JG</div>
+          <h2 class="fw-bold mt-3">Welcome Back</h2>
+          <p class="text-secondary">Sign in to the JG University placement portal</p>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="submit()" class="form-card p-4">
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input class="form-control" [class.is-invalid]="isInvalid('email')" formControlName="email" type="email" placeholder="student@jg.edu" />
+            <div class="invalid-feedback">{{ errorMessage('email') }}</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <div class="input-group">
+              <input class="form-control" [class.is-invalid]="isInvalid('password')" formControlName="password" [type]="showPassword ? 'text' : 'password'" placeholder="Password" />
+              <button class="btn btn-outline-secondary" type="button" (click)="showPassword = !showPassword">
+                <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+              </button>
+            </div>
+            <div class="invalid-feedback d-block" *ngIf="isInvalid('password')">{{ errorMessage('password') }}</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Role</label>
+            <select class="form-select" formControlName="role">
+              <option value="Student">Student</option>
+              <option value="Company">Company</option>
+              <option value="Placement">Placement Cell</option>
+              <option value="Admin">Admin</option>
+            </select>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" formControlName="rememberMe" />
+              <label class="form-check-label">Remember me</label>
+            </div>
+            <a routerLink="/forgot-password" class="text-danger text-decoration-none">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn btn-danger w-100 py-2 fw-semibold">Login</button>
+
+          <div class="text-center mt-4">
+            <span class="text-secondary">New here?</span>
+            <a routerLink="/register" class="text-danger text-decoration-none ms-1">Register</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

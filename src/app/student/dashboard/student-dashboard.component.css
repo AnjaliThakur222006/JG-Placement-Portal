@@ -1,0 +1,50 @@
+.dashboard-shell {
+  display: flex;
+  min-height: 100vh;
+  background: var(--background);
+}
+
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  background: #0f172a;
+  color: white;
+  min-height: 100vh;
+}
+
+.nav-menu .nav-link {
+  color: rgba(255, 255, 255, 0.72);
+  border-radius: 12px;
+  margin-bottom: 0.25rem;
+  padding: 0.7rem 0.8rem;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav-menu .nav-link:hover,
+.nav-menu .nav-link.active {
+  color: white;
+  background: rgba(185, 28, 28, 0.85);
+}
+
+.brand-mark {
+  width: 44px; height: 44px; border-radius: 14px; background: linear-gradient(135deg, #dc2626, #7f1d1d); color: white; font-weight: 800; display: flex; align-items: center; justify-content: center;
+}
+
+.content-area {
+  flex: 1;
+  background: #f8fafc;
+}
+
+@media (max-width: 991px) {
+  .dashboard-shell { display: block; }
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+  }
+  .sidebar .nav-menu {
+    display: none !important;
+  }
+  .sidebar.sidebar-open .nav-menu {
+    display: flex !important;
+  }
+}

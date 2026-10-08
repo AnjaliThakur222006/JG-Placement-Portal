@@ -1,0 +1,78 @@
+<div class="auth-page">
+  <div class="row g-0 min-vh-100">
+    <div class="col-lg-6 auth-visual d-none d-lg-block">
+      <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80" alt="Student enrollment" />
+    </div>
+    <div class="col-lg-6 d-flex align-items-center justify-content-center bg-white">
+      <div class="w-100 px-4 px-lg-5" style="max-width: 700px;">
+        <div class="text-center mb-4">
+          <div class="brand-logo">JG</div>
+          <h2 class="fw-bold mt-3">Create Student Account</h2>
+          <p class="text-secondary">Join the JG University placement community</p>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()" class="form-card p-4">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Full Name</label>
+              <input class="form-control" [class.is-invalid]="isInvalid('fullName')" formControlName="fullName" />
+              <div class="invalid-feedback">{{ errorMessage('fullName') }}</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">College Email</label>
+              <input class="form-control" [class.is-invalid]="isInvalid('email')" formControlName="email" type="email" />
+              <div class="invalid-feedback">{{ errorMessage('email') }}</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Enrollment Number</label>
+              <input class="form-control" [class.is-invalid]="isInvalid('enrollmentNumber')" formControlName="enrollmentNumber" />
+              <div class="invalid-feedback">{{ errorMessage('enrollmentNumber') }}</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Department</label>
+              <input class="form-control" [class.is-invalid]="isInvalid('department')" formControlName="department" />
+              <div class="invalid-feedback">{{ errorMessage('department') }}</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Semester</label>
+              <input class="form-control" [class.is-invalid]="isInvalid('semester')" formControlName="semester" placeholder="e.g. 8th" />
+              <div class="invalid-feedback">{{ errorMessage('semester') }}</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Mobile Number</label>
+              <input class="form-control" [class.is-invalid]="isInvalid('mobile')" formControlName="mobile" inputmode="numeric" maxlength="10" />
+              <div class="invalid-feedback">{{ errorMessage('mobile') }}</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Password</label>
+              <div class="input-group">
+                <input class="form-control" [class.is-invalid]="isInvalid('password')" formControlName="password" [type]="showPassword ? 'text' : 'password'" />
+                <button class="btn btn-outline-secondary" type="button" (click)="showPassword = !showPassword">
+                  <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback d-block" *ngIf="isInvalid('password')">{{ errorMessage('password') }}</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Confirm Password</label>
+              <div class="input-group">
+                <input class="form-control" [class.is-invalid]="isInvalid('confirmPassword') || (form.hasError('mismatch') && form.get('confirmPassword')?.touched)" formControlName="confirmPassword" [type]="showConfirmPassword ? 'text' : 'password'" />
+                <button class="btn btn-outline-secondary" type="button" (click)="showConfirmPassword = !showConfirmPassword">
+                  <i class="bi" [ngClass]="showConfirmPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback d-block" *ngIf="isInvalid('confirmPassword')">{{ form.get('confirmPassword')?.hasError('required') ? 'Please confirm your password.' : '' }}</div>
+              <div class="invalid-feedback d-block" *ngIf="!form.get('confirmPassword')?.hasError('required') && form.hasError('mismatch') && form.get('confirmPassword')?.touched">Passwords do not match.</div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-danger w-100 mt-4 py-2 fw-semibold">Register</button>
+          <div class="text-center mt-3">
+            <span class="text-secondary">Already registered?</span>
+            <a routerLink="/login" class="text-danger text-decoration-none ms-1">Login</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

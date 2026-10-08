@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.toast-container .toast {
+  min-width: 260px;
+  margin-bottom: 12px;
+  box-shadow: 0 10px 30px rgba(17, 24, 39, 0.12);
+}

@@ -1,0 +1,35 @@
+<div class="company-layout">
+  <aside class="company-sidebar" [class.sidebar-open]="sidebarOpen">
+    <div class="sidebar-header">
+      <div class="brand-mark">JG</div>
+      <button class="btn btn-link text-white d-lg-none" type="button" (click)="toggleSidebar()" aria-label="Toggle company navigation">
+        <i class="fs-3" [ngClass]="sidebarOpen ? 'bi bi-x-lg' : 'bi bi-list'"></i>
+      </button>
+    </div>
+
+    <div class="company-identity">
+      <img [src]="company?.logo || 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=200&q=80'" alt="Company logo" />
+      <div class="fw-semibold">{{ company?.name || 'Company' }}</div>
+      <small>Company Portal</small>
+    </div>
+
+    <nav class="nav-menu">
+      <a routerLink="/company/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeSidebar()"><i class="bi bi-grid-1x2-fill"></i>Dashboard</a>
+      <a routerLink="/company/profile" routerLinkActive="active" (click)="closeSidebar()"><i class="bi bi-building"></i>Company Profile</a>
+      <a routerLink="/company/jobs" routerLinkActive="active" (click)="closeSidebar()"><i class="bi bi-briefcase"></i>Jobs</a>
+      <a routerLink="/company/applicants" routerLinkActive="active" (click)="closeSidebar()"><i class="bi bi-people"></i>Applicants</a>
+      <a routerLink="/company/interviews" routerLinkActive="active" (click)="closeSidebar()"><i class="bi bi-calendar-event"></i>Interviews</a>
+      <a routerLink="/company/offers" routerLinkActive="active" (click)="closeSidebar()"><i class="bi bi-award"></i>Offers</a>
+      <a routerLink="/company/reports" routerLinkActive="active" (click)="closeSidebar()"><i class="bi bi-bar-chart"></i>Reports</a>
+      <a routerLink="/company/notifications" routerLinkActive="active" (click)="closeSidebar()"><i class="bi bi-bell"></i>Notifications</a>
+      <a routerLink="/company/ranking" routerLinkActive="active" (click)="closeSidebar()"><i class="bi bi-stars"></i>AI Ranking</a>
+      <a routerLink="/company/settings" routerLinkActive="active" (click)="closeSidebar()"><i class="bi bi-gear"></i>Settings</a>
+    </nav>
+
+    <button class="logout-link" type="button" (click)="logout()"><i class="bi bi-box-arrow-right"></i>Logout</button>
+  </aside>
+
+  <main class="company-content">
+    <router-outlet />
+  </main>
+</div>

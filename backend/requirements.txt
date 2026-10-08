@@ -1,0 +1,4 @@
+Django==5.2.6
+mysqlclient==2.2.7
+PyJWT==2.10.1
+pypdf==6.1.0

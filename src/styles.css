@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+:root {
+  --primary: #b91c1c;
+  --primary-dark: #7f1d1d;
+  --primary-soft: #fef2f2;
+  --text: #0f172a;
+  --muted: #475569;
+  --panel: #ffffff;
+  --panel-alt: #f8fafc;
+  --line: #e2e8f0;
+  --success: #16a34a;
+  --warning: #f59e0b;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(180deg, #fff7f7 0%, #f8fafc 100%);
+  color: var(--text);
+}
+
+img { max-width: 100%; }
+
+button, input, select, textarea { font: inherit; }
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.card-soft,
+.form-card,
+.stat-box {
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+}
+
+.badge-soft {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.5rem 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.section-title {
+  font-size: clamp(2rem, 2.8vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  margin-bottom: 0;
+}
+
+.hero-image {
+  width: 100%;
+  min-height: 520px;
+  object-fit: cover;
+  border-radius: 32px;
+  box-shadow: 0 28px 65px rgba(15, 23, 42, 0.18);
+}
+
+.form-control,
+.form-select {
+  min-height: 52px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: #fff;
+  box-shadow: none;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: rgba(185, 28, 28, 0.55);
+  box-shadow: 0 0 0 0.2rem rgba(185, 28, 28, 0.12);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  border: none;
+  box-shadow: 0 12px 22px rgba(185, 28, 28, 0.18);
+}
+
+.btn-danger:hover,
+.btn-danger:focus {
+  background: linear-gradient(135deg, #c81f1f, #8c1d1d);
+}
+
+.btn-outline-dark,
+.btn-outline-secondary {
+  border-radius: 12px;
+}
+
+.text-danger { color: var(--primary) !important; }
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.status-applied,
+.status-under-review,
+.status-interview-scheduled,
+.status-pending,
+.status-warning {
+  background: rgba(245, 158, 11, 0.12);
+  color: #b45309;
+}
+
+.status-shortlisted,
+.status-selected,
+.status-success {
+  background: rgba(22, 163, 74, 0.12);
+  color: #15803d;
+}
+
+.status-rejected,
+.status-closed {
+  background: rgba(220, 38, 38, 0.12);
+  color: #b91c1c;
+}

@@ -1,0 +1,145 @@
+<div class="page-shell">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+    <div class="container py-3">
+      <a class="navbar-brand fw-bold" routerLink="/">
+        <span class="text-danger">JG</span> University
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#portalNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="portalNav">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-3">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="#how-it-works">How It Works</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+        <div class="d-flex gap-2">
+          <a class="btn btn-outline-secondary" routerLink="/login">Login</a>
+          <a class="btn btn-danger" routerLink="/register">Register</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section id="home" class="container py-5">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <div class="badge-soft bg-danger-subtle text-danger mb-3">JG UNIVERSITY</div>
+        <h1 class="display-4 fw-bolder mb-3">AI-Enabled Placement Management System</h1>
+        <p class="lead text-secondary mb-4">One platform connecting students, recruiters and the placement team.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="#features" class="btn btn-danger btn-lg px-4">Explore Portal</a>
+          <a routerLink="/login" class="btn btn-outline-dark btn-lg px-4">Student Login</a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <img class="hero-image" src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80" alt="Students and campus" />
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="container py-5">
+    <div class="text-center mb-5">
+      <span class="badge-soft bg-warning-subtle text-warning">Platform Features</span>
+      <h2 class="section-title mt-3">Built for every stage of the placement journey</h2>
+    </div>
+    <div class="row g-4">
+      @for (feature of features; track feature.title) {
+        <div class="col-md-6 col-lg-4">
+          <div class="card-soft h-100 p-4">
+            <div class="rounded-circle bg-danger-subtle d-inline-flex align-items-center justify-content-center mb-3" style="width: 52px; height: 52px;">
+              <i class="bi {{ feature.icon }} fs-4 text-danger"></i>
+            </div>
+            <h5 class="fw-bold mb-2">{{ feature.title }}</h5>
+            <p class="text-secondary mb-0">{{ feature.text }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section id="how-it-works" class="container py-5">
+    <div class="text-center mb-5">
+      <span class="badge-soft bg-success-subtle text-success">How It Works</span>
+      <h2 class="section-title mt-3">From profile to placement in five steps</h2>
+    </div>
+    <div class="row g-4">
+      @for (step of steps; track step; let i = $index) {
+        <div class="col-md-6 col-lg-2">
+          <div class="card-soft h-100 p-4 text-center">
+            <div class="fw-bold text-danger mb-2">0{{ i + 1 }}</div>
+            <h6 class="fw-bold">{{ step }}</h6>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="container py-5">
+    <div class="row g-4">
+      @for (stat of stats; track stat.label) {
+        <div class="col-md-6 col-lg-3">
+          <div class="stat-box text-center">
+            <div class="display-6 fw-bold text-danger">{{ stat.value }}</div>
+            <div class="text-secondary mt-2">{{ stat.label }}</div>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section id="about" class="container py-5">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-6">
+        <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=80" alt="JG University campus" class="rounded-4 w-100" style="height: 420px; object-fit: cover;" />
+      </div>
+      <div class="col-lg-6">
+        <span class="badge-soft bg-primary-subtle text-primary">About JG University</span>
+        <h2 class="section-title mt-3">Empowering students with opportunity and industry readiness</h2>
+        <p class="text-secondary">JG University is committed to building career-ready graduates through structured training, industry engagement and transparent placement support.</p>
+        <p class="text-secondary">The placement portal centralizes profile management, job discovery, interview scheduling and analytics into one professional workflow for students, companies and the placement cell.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container py-5">
+    <div class="card-soft p-5 text-center">
+      <h2 class="section-title mb-3">Ready to begin your placement journey?</h2>
+      <p class="text-secondary mb-4">Join a platform designed for serious career outcomes and streamlined recruitment.</p>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a routerLink="/register" class="btn btn-danger btn-lg">Create Account</a>
+        <a routerLink="/login" class="btn btn-outline-dark btn-lg">Login</a>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact" class="bg-dark text-white py-5 mt-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <h5 class="fw-bold mb-3">JG University</h5>
+          <p class="text-white-50">Placement portal for students, recruiters and the university placement team.</p>
+        </div>
+        <div class="col-lg-4">
+          <h6 class="fw-bold mb-3">Quick Links</h6>
+          <ul class="list-unstyled text-white-50">
+            <li>Home</li>
+            <li>About</li>
+            <li>Features</li>
+            <li>Contact</li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h6 class="fw-bold mb-3">Contact</h6>
+          <ul class="list-unstyled text-white-50">
+            <li>placement@jguniversity.edu</li>
+            <li>+91 80 1234 5678</li>
+            <li>Campus Road, Bengaluru</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

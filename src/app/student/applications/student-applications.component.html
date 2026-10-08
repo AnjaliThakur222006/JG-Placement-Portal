@@ -1,0 +1,50 @@
+<div class="dashboard-shell">
+  <aside class="sidebar p-3">
+    <div class="d-flex align-items-center mb-4"><div class="brand-mark">JG</div></div>
+    <nav class="nav-menu d-flex flex-column">
+      <a class="nav-link" routerLink="/student/dashboard"><i class="bi bi-grid-1x2-fill me-2"></i>Dashboard</a>
+      <a class="nav-link" routerLink="/student/profile"><i class="bi bi-person-circle me-2"></i>My Profile</a>
+      <a class="nav-link" routerLink="/student/academic"><i class="bi bi-journal-text me-2"></i>Academic</a>
+      <a class="nav-link" routerLink="/student/skills"><i class="bi bi-tools me-2"></i>Skills</a>
+      <a class="nav-link" routerLink="/student/resume"><i class="bi bi-file-earmark-text me-2"></i>Resume</a>
+      <a class="nav-link" routerLink="/student/certificates"><i class="bi bi-patch-check me-2"></i>Certificates</a>
+      <a class="nav-link" routerLink="/student/jobs"><i class="bi bi-briefcase me-2"></i>Jobs</a>
+      <a class="nav-link active" routerLink="/student/applications"><i class="bi bi-list-check me-2"></i>Applications</a>
+      <a class="nav-link" routerLink="/student/interviews"><i class="bi bi-calendar-event me-2"></i>Interviews</a>
+      <a class="nav-link" routerLink="/student/skill-gap"><i class="bi bi-speedometer2 me-2"></i>Skill Gap</a>
+      <a class="nav-link" routerLink="/student/notifications"><i class="bi bi-bell me-2"></i>Notifications</a>
+      <a class="nav-link" routerLink="/student/settings"><i class="bi bi-gear me-2"></i>Settings</a>
+    </nav>
+  </aside>
+
+  <main class="content-area p-4 p-lg-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <p class="text-muted mb-1">Applications</p>
+        <h2 class="fw-bold mb-0">My Applications</h2>
+      </div>
+    </div>
+
+    <div class="card-soft p-4">
+      @if (applications.length) {
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead><tr><th>Job</th><th>Company</th><th>Applied Date</th><th>Status</th></tr></thead>
+            <tbody>
+              @for (item of applications; track item.id) {
+                <tr>
+                  <td>{{ item.job?.title }}</td>
+                  <td>{{ item.company?.name }}</td>
+                  <td>{{ item.appliedDate | date:'mediumDate' }}</td>
+                  <td><span class="status-badge status-{{ item.status.toLowerCase().replace(' ', '-') }}">{{ item.status }}</span></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <div class="empty-state"><i class="bi bi-list-check fs-1 text-danger"></i><p class="mb-0 mt-2">No applications yet.</p></div>
+      }
+    </div>
+  </main>
+</div>

@@ -1,0 +1,91 @@
+<div class="dashboard-shell">
+  <aside class="sidebar p-3">
+    <div class="d-flex align-items-center mb-4"><div class="brand-mark">JG</div></div>
+    <nav class="nav-menu d-flex flex-column">
+      <a class="nav-link" routerLink="/student/dashboard"><i class="bi bi-grid-1x2-fill me-2"></i>Dashboard</a>
+      <a class="nav-link active" routerLink="/student/profile"><i class="bi bi-person-circle me-2"></i>My Profile</a>
+      <a class="nav-link" routerLink="/student/academic"><i class="bi bi-journal-text me-2"></i>Academic</a>
+      <a class="nav-link" routerLink="/student/skills"><i class="bi bi-tools me-2"></i>Skills</a>
+      <a class="nav-link" routerLink="/student/resume"><i class="bi bi-file-earmark-text me-2"></i>Resume</a>
+      <a class="nav-link" routerLink="/student/certificates"><i class="bi bi-patch-check me-2"></i>Certificates</a>
+      <a class="nav-link" routerLink="/student/jobs"><i class="bi bi-briefcase me-2"></i>Jobs</a>
+      <a class="nav-link" routerLink="/student/applications"><i class="bi bi-list-check me-2"></i>Applications</a>
+      <a class="nav-link" routerLink="/student/interviews"><i class="bi bi-calendar-event me-2"></i>Interviews</a>
+      <a class="nav-link" routerLink="/student/skill-gap"><i class="bi bi-speedometer2 me-2"></i>Skill Gap</a>
+      <a class="nav-link" routerLink="/student/notifications"><i class="bi bi-bell me-2"></i>Notifications</a>
+      <a class="nav-link" routerLink="/student/settings"><i class="bi bi-gear me-2"></i>Settings</a>
+    </nav>
+  </aside>
+
+  <main class="content-area p-4 p-lg-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <p class="text-muted mb-1">Student profile</p>
+        <h2 class="fw-bold mb-0">Professional Profile</h2>
+      </div>
+      <div>
+        @if (!editMode) {
+          <button class="btn btn-danger" (click)="editMode = true">Edit</button>
+        } @else {
+          <div class="d-flex gap-2">
+            <button class="btn btn-danger" (click)="save()">Save</button>
+            <button class="btn btn-outline-secondary" (click)="editMode = false; applyForm();">Cancel</button>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="card-soft p-4">
+      <form [formGroup]="form">
+        <div class="row g-4 align-items-center mb-4">
+          <div class="col-md-3 text-center">
+            <img [src]="student?.profileImage || 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80'" class="rounded-circle mx-auto" style="width:120px;height:120px;object-fit:cover;" alt="Student profile image" />
+          </div>
+          <div class="col-md-9">
+            <h4 class="fw-bold mb-1">{{ student?.fullName }}</h4>
+            <div class="text-muted mb-2">{{ student?.department }} • {{ student?.semester }}</div>
+            <div class="badge-soft bg-danger-subtle text-danger">Enrollment: {{ student?.enrollmentNumber }}</div>
+          </div>
+        </div>
+
+        @if (editMode) {
+          <div class="mb-4">
+            <label class="form-label">Profile photo URL</label>
+            <input class="form-control mb-3" formControlName="profileImage" placeholder="https://images.unsplash.com/..." />
+            <label class="form-label d-block mt-2">Upload profile photo</label>
+            <input class="form-control mb-3" type="file" accept="image/*" (change)="onProfileImageSelected($event)" />
+            <div class="d-flex flex-wrap gap-2">
+              @for (photo of photoOptions; track photo) {
+                <button type="button" class="btn btn-light border p-0 overflow-hidden" (click)="choosePhoto(photo)" style="width:56px;height:56px;">
+                  <img [src]="photo" alt="Profile option" style="width:100%;height:100%;object-fit:cover;" />
+                </button>
+              }
+            </div>
+          </div>
+        }
+
+        <div class="row g-3">
+          <div class="col-md-6"><label class="form-label">Full Name</label><input class="form-control" formControlName="fullName" [attr.disabled]="!editMode ? true : null" /></div>
+          <div class="col-md-6"><label class="form-label">Email</label><input class="form-control" formControlName="email" [attr.disabled]="!editMode ? true : null" /></div>
+          <div class="col-md-6"><label class="form-label">Mobile</label><input class="form-control" [class.is-invalid]="isInvalid('mobile')" formControlName="mobile" [attr.disabled]="!editMode ? true : null" /><div class="invalid-feedback">Use a valid 10-digit Indian mobile number.</div></div>
+          <div class="col-md-6"><label class="form-label">Enrollment Number</label><input class="form-control" [class.is-invalid]="isInvalid('enrollmentNumber')" formControlName="enrollmentNumber" [attr.disabled]="!editMode ? true : null" /><div class="invalid-feedback">Enter a valid enrollment number.</div></div>
+          <div class="col-md-6"><label class="form-label">Department</label><input class="form-control" [class.is-invalid]="isInvalid('department')" formControlName="department" [attr.disabled]="!editMode ? true : null" /><div class="invalid-feedback">Department is required.</div></div>
+          <div class="col-md-6"><label class="form-label">Semester</label><input class="form-control" [class.is-invalid]="isInvalid('semester')" formControlName="semester" [attr.disabled]="!editMode ? true : null" /><div class="invalid-feedback">Use a semester from 1st to 8th.</div></div>
+          <div class="col-md-12"><label class="form-label">Location</label><input class="form-control" formControlName="location" [attr.disabled]="!editMode ? true : null" /></div>
+          <div class="col-md-12"><label class="form-label">About</label><textarea class="form-control" rows="3" formControlName="about" [attr.disabled]="!editMode ? true : null"></textarea></div>
+          <div class="col-md-12"><label class="form-label">Career Objective</label><textarea class="form-control" rows="3" formControlName="careerObjective" [attr.disabled]="!editMode ? true : null"></textarea></div>
+
+          @if (!editMode) {
+            <div class="col-md-4"><label class="form-label">LinkedIn</label><a *ngIf="student?.linkedIn" class="d-block text-danger text-decoration-underline" [href]="openUrl(student?.linkedIn)" target="_blank" rel="noopener noreferrer">Open LinkedIn</a><span *ngIf="!student?.linkedIn" class="text-muted">Not provided</span></div>
+            <div class="col-md-4"><label class="form-label">GitHub</label><a *ngIf="student?.gitHub" class="d-block text-danger text-decoration-underline" [href]="openUrl(student?.gitHub)" target="_blank" rel="noopener noreferrer">Open GitHub</a><span *ngIf="!student?.gitHub" class="text-muted">Not provided</span></div>
+            <div class="col-md-4"><label class="form-label">Portfolio</label><a *ngIf="student?.portfolio" class="d-block text-danger text-decoration-underline" [href]="openUrl(student?.portfolio)" target="_blank" rel="noopener noreferrer">Open Portfolio</a><span *ngIf="!student?.portfolio" class="text-muted">Not provided</span></div>
+          } @else {
+            <div class="col-md-4"><label class="form-label">LinkedIn</label><input class="form-control" formControlName="linkedIn" /></div>
+            <div class="col-md-4"><label class="form-label">GitHub</label><input class="form-control" formControlName="gitHub" /></div>
+            <div class="col-md-4"><label class="form-label">Portfolio</label><input class="form-control" formControlName="portfolio" /></div>
+          }
+        </div>
+      </form>
+    </div>
+  </main>
+</div>

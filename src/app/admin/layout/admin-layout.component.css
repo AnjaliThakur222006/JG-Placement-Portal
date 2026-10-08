@@ -1,0 +1,23 @@
+:host { display: block; min-height: 100vh; }
+
+.admin-layout { display: flex; min-height: 100vh; background: #f8fafc; }
+.admin-sidebar { position: fixed; inset: 0 auto 0 0; z-index: 20; display: flex; flex-direction: column; width: 280px; padding: 1.25rem; overflow-y: auto; background: linear-gradient(180deg, #111827 0%, #1f2937 100%); color: white; }
+.admin-content { width: calc(100% - 280px); margin-left: 280px; min-width: 0; }
+.sidebar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+.brand-mark { width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #dc2626, #7f1d1d); color: white; font-weight: 800; }
+.admin-identity { text-align: center; margin-bottom: 1.5rem; }
+.identity-icon { width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; border-radius: 50%; background: rgba(185, 28, 28, 0.9); font-size: 2rem; }
+.admin-identity small { color: rgba(255,255,255,0.55); }
+.nav-menu { display: flex; flex-direction: column; gap: 0.25rem; }
+.nav-menu a, .logout-link { display: flex; align-items: center; gap: 0.7rem; width: 100%; padding: 0.68rem 0.8rem; border: 0; border-radius: 12px; color: rgba(255,255,255,0.74); background: transparent; text-decoration: none; text-align: left; font: inherit; cursor: pointer; }
+.nav-menu a i, .logout-link i { width: 1.2rem; text-align: center; }
+.nav-menu a:hover, .nav-menu a.active, .logout-link:hover { color: white; background: rgba(185, 28, 28, 0.85); }
+.logout-link { margin-top: auto; }
+
+@media (max-width: 991px) {
+  .admin-layout { display: block; }
+  .admin-sidebar { position: relative; width: 100%; min-height: auto; inset: auto; }
+  .admin-content { width: 100%; margin-left: 0; }
+  .admin-sidebar .nav-menu, .admin-sidebar .logout-link { display: none; }
+  .admin-sidebar.sidebar-open .nav-menu, .admin-sidebar.sidebar-open .logout-link { display: flex; }
+}

@@ -1,0 +1,58 @@
+<main class="content-area p-4 p-lg-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <p class="text-muted mb-1">Company dashboard</p>
+        <h2 class="fw-bold mb-0">Welcome {{ company?.name }}</h2>
+      </div>
+      <a class="btn btn-outline-danger" routerLink="/company/profile"><i class="bi bi-building me-2"></i>Company profile</a>
+    </div>
+
+    <div class="row g-4 mb-4">
+      <div class="col-md-6 col-xl-3"><div class="card-soft p-4"><div class="text-muted">Active Jobs</div><div class="display-6 fw-bold text-danger">{{ stats.activeJobs }}</div></div></div>
+      <div class="col-md-6 col-xl-3"><div class="card-soft p-4"><div class="text-muted">Total Applicants</div><div class="display-6 fw-bold text-primary">{{ stats.totalApplicants }}</div></div></div>
+      <div class="col-md-6 col-xl-3"><div class="card-soft p-4"><div class="text-muted">Shortlisted</div><div class="display-6 fw-bold text-success">{{ stats.shortlisted }}</div></div></div>
+      <div class="col-md-6 col-xl-3"><div class="card-soft p-4"><div class="text-muted">Interviews</div><div class="display-6 fw-bold text-warning">{{ stats.interviews }}</div></div></div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-7">
+        <div class="card-soft p-4 mb-4">
+          <div class="d-flex align-items-center justify-content-between mb-3"><h5 class="fw-bold mb-0">Recent Applicants</h5><a routerLink="/company/applicants" class="text-danger text-decoration-none">View all</a></div>
+          @if (applicants.length) {
+            <table class="table align-middle">
+              <thead><tr><th>Student</th><th>Department</th><th>Status</th></tr></thead>
+              <tbody>
+                @for (app of applicants.slice(0,5); track app.id) {
+                  <tr>
+                    <td><a routerLink="/company/applicants" class="text-dark text-decoration-none fw-semibold">{{ data.getStudents().find((s) => s.id === app.studentId)?.fullName }}</a></td>
+                    <td>{{ data.getStudents().find((s) => s.id === app.studentId)?.department }}</td>
+                    <td><span class="status-badge status-{{ app.status.toLowerCase().replace(' ', '-') }}">{{ app.status }}</span></td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          } @else {
+            <div class="empty-state"><i class="bi bi-people fs-1 text-danger"></i><p class="mb-0 mt-2">No applicants yet.</p></div>
+          }
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="card-soft p-4">
+          <div class="d-flex align-items-center justify-content-between mb-3"><h5 class="fw-bold mb-0">Active Jobs</h5><a routerLink="/company/jobs" class="text-danger text-decoration-none">Manage</a></div>
+          @if (jobs.length) {
+            @for (job of jobs; track job.id) {
+              <a routerLink="/company/jobs" class="border rounded p-3 mb-2 d-block text-decoration-none text-dark"><div class="fw-bold">{{ job.title }}</div><small class="text-muted">{{ job.location }} • {{ job.type }}</small></a>
+            }
+          } @else {
+            <div class="empty-state"><i class="bi bi-briefcase fs-1 text-danger"></i><p class="mb-0 mt-2">No jobs created.</p></div>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="d-flex flex-wrap gap-2 mt-4">
+      <a class="btn btn-danger" routerLink="/company/jobs"><i class="bi bi-plus-lg me-2"></i>Post a job</a>
+      <a class="btn btn-outline-secondary" routerLink="/company/interviews"><i class="bi bi-calendar-event me-2"></i>View interviews</a>
+      <a class="btn btn-outline-secondary" routerLink="/company/offers"><i class="bi bi-award me-2"></i>Review offers</a>
+      <a class="btn btn-outline-secondary" routerLink="/company/reports"><i class="bi bi-bar-chart me-2"></i>Open reports</a>
+    </div>
+</main>
