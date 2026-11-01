@@ -24,9 +24,13 @@ export class CompanyDashboardComponent implements OnInit {
     this.applicants = this.data.getApplications().filter((a) => a.companyId === this.company?.id);
   }
 
+  openUrl(url: string | null | undefined): string {
+    return url && /^https?:\/\//i.test(url) ? url : `https://${url ?? ''}`;
+  }
+
   get stats() {
     return {
-      activeJobs: this.jobs.length,
+      activeJobs: this.jobs.filter((job) => job.status === 'Approved').length,
       totalApplicants: this.applicants.length,
       shortlisted: this.applicants.filter((a) => a.status === 'Shortlisted').length,
       interviews: this.data.getInterviews().filter((i) => i.companyId === this.company?.id).length,

@@ -88,7 +88,7 @@
 - Live MySQL integration: requires the user's local MySQL service and credentials, so it cannot be truthfully marked as executed in this environment.
 
 ## Local setup
-1. MySQL: create/use `jg_placement_portal`, user `root`, password `anjali@2`.
+1. MySQL: create/use `jg_placement_portal` and configure the username/password with `MYSQL_USER` and `MYSQL_PASSWORD` environment variables.
 2. Backend:
    `cd backend`
    `py -m venv .venv`

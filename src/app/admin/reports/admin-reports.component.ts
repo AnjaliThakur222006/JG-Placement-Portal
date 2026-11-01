@@ -43,6 +43,14 @@ import type { jsPDF as JsPdfDocument } from 'jspdf';
       </section>
 
       <section class="card border-0 shadow-sm p-4 mb-4">
+        <h3 class="h5 fw-bold mb-3">Company profiles</h3>
+        <div class="table-responsive"><table class="table align-middle mb-0">
+          <thead><tr><th>Company</th><th>Industry</th><th>Location</th><th>Website</th><th>Verification</th></tr></thead>
+          <tbody><tr *ngFor="let company of companies"><td>{{ company.name }}</td><td>{{ company.industry }}</td><td>{{ company.location }}</td><td>{{ company.website || 'Not provided' }}</td><td>{{ company.isVerified ? 'Verified' : 'Pending' }}</td></tr></tbody>
+        </table></div>
+      </section>
+
+      <section class="card border-0 shadow-sm p-4 mb-4">
         <h3 class="h5 fw-bold mb-3">Company jobs</h3>
         <div class="table-responsive"><table class="table align-middle mb-0">
           <thead><tr><th>Role</th><th>Company</th><th>Location</th><th>Type</th><th>Status</th></tr></thead>
@@ -99,6 +107,17 @@ import type { jsPDF as JsPdfDocument } from 'jspdf';
       </section>
 
       <section class="card border-0 shadow-sm p-4">
+        <h3 class="h5 fw-bold mb-3">Placement announcements</h3>
+        <div *ngIf="recentNotifications.length === 0" class="text-secondary">No announcements are available.</div>
+        <div *ngIf="recentNotifications.length > 0" class="table-responsive">
+          <table class="table align-middle mb-0">
+            <thead><tr><th>When</th><th>Announcement</th><th>Message</th></tr></thead>
+            <tbody><tr *ngFor="let notification of recentNotifications"><td>{{ notification.createdAt | date:'mediumDate' }}</td><td>{{ notification.title }}</td><td>{{ notification.message }}</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card border-0 shadow-sm p-4 mb-4">
         <h3 class="h5 fw-bold mb-3">Recent audit activity</h3>
         <div *ngIf="recentAuditLogs.length === 0" class="text-secondary">No audit activity is available.</div>
         <div *ngIf="recentAuditLogs.length > 0" class="table-responsive">
@@ -139,6 +158,7 @@ export class AdminReportsComponent implements OnInit {
   drives: ReturnType<DataService['getPlacementDrives']> = [];
   certificates: ReturnType<DataService['getCertificates']> = [];
   tickets: ReturnType<DataService['getTickets']> = [];
+  recentNotifications: ReturnType<DataService['getNotifications']> = [];
 
   constructor(private data: DataService) {}
 
@@ -153,6 +173,9 @@ export class AdminReportsComponent implements OnInit {
     this.drives = state.placementDrives;
     this.certificates = state.certificates;
     this.tickets = state.tickets;
+    this.recentNotifications = [...state.notifications]
+      .sort((left, right) => new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime())
+      .slice(0, 10);
     const selectedStudentIds = new Set([
       ...state.applications.filter((application) => application.status === 'Selected').map((application) => application.studentId),
       ...state.offers.filter((offer) => offer.status === 'Accepted').map((offer) => offer.studentId)
@@ -168,6 +191,7 @@ export class AdminReportsComponent implements OnInit {
       { label: 'Student profiles', value: state.students.length },
       { label: 'Verified companies', value: state.companies.filter((company) => company.isVerified).length },
       { label: 'Approved jobs', value: state.jobs.filter((job) => job.status === 'Approved').length },
+      { label: 'Shortlisted applications', value: state.applications.filter((application) => application.status === 'Shortlisted').length },
       { label: 'Applications', value: state.applications.length },
       { label: 'Interviews', value: state.interviews.length },
       { label: 'Offers', value: state.offers.length },
@@ -233,6 +257,9 @@ export class AdminReportsComponent implements OnInit {
       student.fullName, student.department, student.academic.cgpa, student.academic.graduationYear,
       student.skills.slice(0, 3).map((skill) => skill.name).join(', ')
     ]));
+    addTable('Company profiles', ['Company', 'Industry', 'Location', 'Website', 'Verification'], this.companies.map((company) => [
+      company.name, company.industry, company.location, company.website || 'Not provided', company.isVerified ? 'Verified' : 'Pending'
+    ]));
     addTable('Company jobs', ['Role', 'Company', 'Location', 'Type', 'Status'], this.jobs.map((job) => [
       job.title, this.companyName(job.companyId), job.location, job.type, job.status
     ]));
@@ -253,6 +280,9 @@ export class AdminReportsComponent implements OnInit {
     ]));
     addTable('Support tickets', ['Raised by', 'Subject', 'Details', 'Status'], this.tickets.map((ticket) => [
       this.userName(ticket.raisedBy), ticket.subject, ticket.message, ticket.status
+    ]));
+    addTable('Placement announcements', ['When', 'Announcement', 'Message'], this.recentNotifications.map((notification) => [
+      new Date(notification.createdAt).toLocaleDateString(), notification.title, notification.message
     ]));
     addTable('Recent audit activity', ['When', 'User', 'Action'], this.recentAuditLogs.map((log) => [
       new Date(log.createdAt).toLocaleString(), log.user, log.action

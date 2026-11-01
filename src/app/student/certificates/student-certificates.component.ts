@@ -7,6 +7,7 @@ import { DataService } from '../../core/services/data.service';
 import { ToastService } from '../../core/services/toast.service';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-student-certificates',
@@ -90,7 +91,7 @@ export class StudentCertificatesComponent implements OnInit {
     const input = event.target as HTMLInputElement; const file = input.files?.[0]; if (!file) return;
     if (file.type !== 'application/pdf' || file.size > 5 * 1024 * 1024) { this.toast.show('Certificate must be a PDF up to 5 MB.', 'warning'); return; }
     const token = localStorage.getItem('apiToken'); const form = new FormData(); form.append('file', file); form.append('name', this.form.get('name')?.value || file.name); form.append('issuingOrganization', this.form.get('issuingOrganization')?.value || '');
-    try { await firstValueFrom(this.http.post('http://127.0.0.1:8000/api/student/certificate/upload/', form, {headers: token ? {'X-API-Token': token} : {}})); this.toast.show('Certificate uploaded for verification.', 'success'); } catch (e:any) { this.toast.show(e?.error?.detail || 'Certificate upload failed.', 'danger'); }
+    try { await firstValueFrom(this.http.post(`${environment.apiUrl}/student/certificate/upload/`, form, {headers: token ? {'X-API-Token': token} : {}})); this.toast.show('Certificate uploaded for verification.', 'success'); } catch (e:any) { this.toast.show(e?.error?.detail || 'Certificate upload failed.', 'danger'); }
   }
 
   edit(record: any): void {

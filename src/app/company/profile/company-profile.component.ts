@@ -36,6 +36,10 @@ export class CompanyProfileComponent implements OnInit {
     this.form.patchValue(this.company);
   }
 
+  openUrl(url: string | null | undefined): string {
+    return url && /^https?:\/\//i.test(url) ? url : `https://${url ?? ''}`;
+  }
+
   save(): void {
     const state = this.data.getState();
     const idx = state.companies.findIndex((c) => c.id === this.company.id);

@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { DataService } from '../core/services/data.service';
 import { NotificationItem } from '../core/models';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-srs-features',
@@ -46,7 +47,7 @@ export class SrsFeaturesComponent implements OnInit {
   password = '';
   demoOtp = '';
 
-  private readonly api = 'http://127.0.0.1:8000/api';
+  private readonly api = environment.apiUrl;
 
   constructor(
     private readonly route: ActivatedRoute,

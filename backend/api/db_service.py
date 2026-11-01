@@ -9,7 +9,8 @@ from django.db import transaction
 from .models import (
     UserAccount, Department, StudentProfile, AcademicRecord, Skill, StudentSkill, Resume, Certificate,
     Company, CompanyHR, Job, JobSkill, Application, Interview, Offer, Notification, PlacementDrive,
-    Ticket, AuditLog, LoginHistory, AIAnalysis, SystemSetting, AlumniProfile, Achievement
+    Ticket, AuditLog, LoginHistory, AIAnalysis, SystemSetting, AlumniProfile, Achievement,
+    MockTestQuestion,
 )
 
 DEMO_PASSWORDS = {
@@ -240,6 +241,25 @@ def seed_data():
         for student_email, student in students.items():
             for title, message in announcements:
                 Notification.objects.get_or_create(user=student.user, title=title, message=message, defaults={"id": sid()})
+
+        mock_test_questions = [
+            ("Quantitative", "A train covers 90 km in 1.5 hours. What is its average speed?", ["45 km/h", "60 km/h", "75 km/h", "90 km/h"], 1, "Average speed is distance divided by time.", "Easy"),
+            ("Logical", "Find the next number in the sequence: 3, 6, 12, 24, __.", ["30", "36", "48", "54"], 2, "Each number is multiplied by two.", "Easy"),
+            ("Verbal", "Choose the closest synonym for 'concise'.", ["Brief", "Unclear", "Detailed", "Delayed"], 0, "Concise means brief and to the point.", "Easy"),
+            ("Technical", "Which HTTP status code indicates a successful resource creation?", ["200", "201", "301", "404"], 1, "201 Created is commonly returned when a resource is created.", "Medium"),
+            ("Quantitative", "A product priced at Rs. 800 is discounted by 15%. What is the sale price?", ["Rs. 660", "Rs. 680", "Rs. 700", "Rs. 720"], 1, "The discount is Rs. 120, so the sale price is Rs. 680.", "Medium"),
+            ("Logical", "All developers use version control. Mira is a developer. What follows?", ["Mira uses version control", "Mira manages a team", "All users are developers", "No conclusion can be drawn"], 0, "This follows directly from the two statements.", "Medium"),
+            ("Technical", "Which data structure follows the FIFO principle?", ["Stack", "Queue", "Tree", "Heap"], 1, "A queue processes items in first-in, first-out order.", "Easy"),
+            ("Technical", "What is the average-case lookup time for a key in a hash table?", ["O(1)", "O(log n)", "O(n)", "O(n log n)"], 0, "Hash tables provide average-case constant-time lookup.", "Medium"),
+        ]
+        for category, question, options, answer, explanation, difficulty in mock_test_questions:
+            MockTestQuestion.objects.get_or_create(
+                question=question,
+                defaults={
+                    "id": sid(), "category": category, "options": options, "answer": answer,
+                    "explanation": explanation, "difficulty": difficulty,
+                },
+            )
 
         PlacementDrive.objects.get_or_create(name="JG Tech Placement Drive", defaults={
             "id": sid(), "company": company.name, "date": date(2026, 10, 15),

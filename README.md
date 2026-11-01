@@ -24,11 +24,10 @@ The local defaults are:
 
 - database: `jg_placement_portal`
 - user: `root`
-- password: `avniisha@05`
 - host: `127.0.0.1`
 - port: `3306`
 
-If your MySQL is on another port, set `MYSQL_PORT` before starting the backend.
+Set your local MySQL password with the `MYSQL_PASSWORD` environment variable before starting the backend. If MySQL is on another port, also set `MYSQL_PORT`. Never commit local database credentials.
 
 ## First-time backend setup (PowerShell)
 
@@ -57,6 +56,24 @@ npm start
 Open:
 
 `http://localhost:4200`
+
+In PowerShell, use the commands above or `.\setup.ps1` for the backend. Do not paste Windows batch-file commands such as `@echo off` or `call ...activate.bat` directly into a PowerShell prompt.
+
+## Production deployment
+
+The Netlify build and SPA redirect are configured in `netlify.toml`. Before deploying, replace the placeholder API URL in `src/environments/environment.prod.ts` with the public URL of the deployed Django API, including `/api`. The OTP, certificate-upload, mock-feature, and dashboard requests all use this same environment URL.
+
+Deploy the Django API and MySQL database separately from Netlify. Configure these backend environment variables on the hosting provider:
+
+- `DJANGO_SECRET_KEY`: a unique, random secret
+- `DJANGO_DEBUG=0`
+- `DJANGO_ALLOWED_HOSTS`: comma-separated backend hostnames
+- `CORS_ALLOWED_ORIGINS`: comma-separated Netlify/custom frontend origins
+- `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_DATABASE`, `MYSQL_USER`, `MYSQL_PASSWORD`
+
+Run `python manage.py init_portal_db` once against the production database to create tables and seed the demo accounts, company jobs/applications, notifications, and mock-test questions. Keep the four demo passwords for demonstration only; change or disable these accounts before opening a public production portal.
+
+The Netlify site cannot make authenticated API requests until a backend URL and production database have been provisioned and configured as above.
 
 ## Demo accounts
 
@@ -96,7 +113,7 @@ CRUD collection routes exist for users, students, companies, jobs, applications,
 
 MySQL Server must be running before `init_portal_db` or the API is started. If XAMPP MySQL uses port 3307/3308 instead of 3306, change `MYSQL_PORT`.
 
-The database password is included only as the local-development default requested for this project. For deployment, use environment variables and change the password.
+Database credentials must be provided through environment variables and must not be committed to the repository.
 
 
 

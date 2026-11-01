@@ -24,11 +24,10 @@ The local defaults are:
 
 - database: `jg_placement_portal`
 - user: `root`
-- password: `anjali@2`
 - host: `127.0.0.1`
 - port: `3306`
 
-If your MySQL is on another port, set `MYSQL_PORT` before starting the backend.
+Set your local MySQL password with the `MYSQL_PASSWORD` environment variable before starting the backend. If MySQL is on another port, also set `MYSQL_PORT`. Never commit local database credentials.
 
 ## First-time backend setup (PowerShell)
 
@@ -44,6 +43,8 @@ If PowerShell blocks the script:
 Set-ExecutionPolicy -Scope Process Bypass
 .\setup.ps1
 ```
+
+Run these commands in a PowerShell terminal. Do not paste `.bat` syntax such as `@echo off` or `call venv\Scripts\activate.bat` into PowerShell. The setup script creates the virtual environment, installs dependencies, initializes MySQL tables, and idempotently seeds demo data.
 
 ## Frontend
 
@@ -96,4 +97,8 @@ CRUD collection routes exist for users, students, companies, jobs, applications,
 
 MySQL Server must be running before `init_portal_db` or the API is started. If XAMPP MySQL uses port 3307/3308 instead of 3306, change `MYSQL_PORT`.
 
-The database password is included only as the local-development default requested for this project. For deployment, use environment variables and change the password.
+Database credentials must be provided through environment variables and must not be committed to the repository.
+
+## Production configuration
+
+The frontend's Netlify build needs the deployed Django API URL in `src/environments/environment.prod.ts` (ending in `/api`). Set `DJANGO_SECRET_KEY`, `DJANGO_DEBUG=0`, `DJANGO_ALLOWED_HOSTS`, `CORS_ALLOWED_ORIGINS`, and the `MYSQL_*` connection variables on the backend host. Add the exact Netlify site origin to `CORS_ALLOWED_ORIGINS`; do not use `*`. Run `manage.py init_portal_db` once against the production database to create tables and seed the sample placement and mock-test data.
